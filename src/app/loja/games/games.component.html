@@ -1,0 +1,15 @@
+
+<div class="card" style="width: 18rem;" *ngFor="let game of games">
+  <div class="card-header" (mouseenter)="game.container_on = true" (mouseleave)="game.container_on = false">
+    <a href="#"  (click)="adicionarCarrinho(pedido)"><img class="card-img-top" src={{game.image}}></a>
+</div>
+  <div class="card-body"  *ngIf="!game.container_on">
+    <p class="card-text">{{game.name}}</p>
+    <a href="#">{{game.price | currency: 'BRL': true}}</a>
+  </div>
+  <div   class="card-body" *ngIf="game.container_on" >
+  <a href="#" >adicionar
+        ao carrinho
+    </a>
+</div>
+</div>

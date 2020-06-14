@@ -1,0 +1,12 @@
+.card {
+  float: left;
+  margin: 30px;
+
+}
+.card-header {
+  background: #EEEEEE 0% 0% no-repeat padding-box;
+}
+.card-body {
+  margin: auto;
+  text-align: center;
+}
