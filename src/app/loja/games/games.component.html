@@ -1,15 +1,25 @@
 
-<div class="card" style="width: 18rem;" *ngFor="let game of games">
-  <div class="card-header" (mouseenter)="game.container_on = true" (mouseleave)="game.container_on = false">
-    <a href="#"  (click)="adicionarCarrinho(pedido)"><img class="card-img-top" src={{game.image}}></a>
-</div>
-  <div class="card-body"  *ngIf="!game.container_on">
-    <p class="card-text">{{game.name}}</p>
-    <a href="#">{{game.price | currency: 'BRL': true}}</a>
+<div class="row card-deck">
+  <div class="col-lg-4 col-md-6 mb-4" *ngFor="let pedido of gamePedidos">
+      <div (mouseenter)="pedido.container = true" (mouseleave)="pedido.container = false" class="card text-center">
+          <div class="card-header">
+              <a href="#" (click)="adicionarCarinho(pedido)"><img class="card-img-top" src={{pedido.game.image}}></a>
+          </div>
+          <div class="card-body2" *ngIf="!pedido.container">
+
+              <h6 id="produto-titulo">{{pedido.game.name}}</h6>
+              <h6 class="card-price">R$ {{pedido.game.price}}</h6>
+          </div>
+              <div class="container-add" *ngIf="pedido.container">
+                  <div class="row">
+                      <div >
+                          <button class="btn"><a href="#" (click)="adicionarCarinho(pedido)">adicionar
+                              ao carrinho</a>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+
+      </div>
   </div>
-  <div   class="card-body" *ngIf="game.container_on" >
-  <a href="#" >adicionar
-        ao carrinho
-    </a>
-</div>
 </div>

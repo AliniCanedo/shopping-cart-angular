@@ -1,15 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { OrdemComponent } from './ordem/ordem.component';
+import { CarrinhoDeComprasComponent } from './carrinho-de-compras/carrinho-de-compras.component';
+import { GamesComponent } from './games/games.component';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-loja',
   templateUrl: './loja.component.html',
   styleUrls: ['./loja.component.css']
 })
-export class LojaComponent implements OnInit {
+export class LojaComponent  {
 
-  constructor() { }
+  private collapsed = true;
+  fimDoPedido = false;
 
-  ngOnInit(): void {
+  @ViewChild('productsC')
+  productsC: GamesComponent;
+
+  @ViewChild('shoppingCartC')
+  shoppingCartC: CarrinhoDeComprasComponent;
+
+  @ViewChild('ordersC')
+  ordersC: OrdemComponent;
+
+
+  fecharPedido(fimDoPedido: boolean) {
+      this.fimDoPedido = fimDoPedido;
   }
 
+  redefinir() {
+      this.fimDoPedido = false;
+      this.productsC.redefinir();
+      this.shoppingCartC.redefinir();
+      this.ordersC.pago = false;
+  }
 }

@@ -1,45 +1,46 @@
-<div class="card text-white mb-3">
-  <div class="card-header text-center">
-      <h5>Carrinho</h5>
 
+<div class="card text-white mb-3" style="max-width: 18rem;">
+  <div class="card-header text-center">
+      <h5>Carrinho </h5> <h6>{{ total }} </h6>
   </div>
-  <div class="card-body2" >
-      <img >
+  <div class="card-body2" [hidden]="pedidos.gameOrdens.length !== 0">
+      <img src="../assets/cart-icon.svg">
       <h6>Até o momento,<br> o seu carrinho está vazio</h6>
   </div>
-  <div class="card-body">
+  <div class="card-body" [hidden]="pedidos.gameOrdens.length == 0">
       <ul>
           <li>
-              <div class="order-content"
+              <div class="order-content"  *ngFor="let pedido of pedidos.gameOrdens"
                  >
-                  <img src="">
+                  <img src={{pedido.game.image}}>
                   <div>
-                      <h6></h6>
+                      <h6>{{ pedido.game.name }}</h6>
                       <br>
-                      <h6 style="color:black"><strong></strong></h6>
-                  </div>
-                  <div >
-                      <button class="btn-custom btn-primary"
-                         >X</button>
+                      <h6 style="color:black"><strong>{{ pedido.game.price | currency: 'BRL': true}} </strong></h6>
                   </div>
 
-              </div>
+                  <button type="button" class="close"  aria-label="Close" (click)="removerCarrinho(pedido)">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
           </li>
       </ul>
-      <div class="card-content">
+    <!--   <div class="card-content">
           <h6>Subtotal</h6>
-          <h6 style="color: black; text-align: right;"></h6>
+        <h6 style="color: black; text-align: right;"> {{ subTotal | currency: 'BRL': true}}</h6>
       </div>
       <div class="card-content">
           <h6>Frete</h6>
-          <h6 style="color: black; text-align: right;"></h6>
-      </div>
+          <h6 style="color: black; text-align: right;">{{ sumFrete | currency: 'BRL': true}}</h6>
+      </div> -->
       <div class="card-content">
           <h6>Total</h6>
-          <h4 style="color: black; text-align: right;"></h4>
+          <h4 style="color: black; text-align: right;"> {{ total | currency: 'BRL': true}}</h4>
       </div>
-      <button class="btn btn-primary btn-block"
-         >Finalizar compra
+      <button class="btn btn-primary" (click)="fecharPedido()"
+          [disabled]="pedidos.gameOrdens.length == 0"
+          > Finalizar compra
       </button>
   </div>
 </div>

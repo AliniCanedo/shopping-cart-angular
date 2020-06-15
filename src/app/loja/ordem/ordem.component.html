@@ -1,0 +1,15 @@
+<div class="pagamento"></div>
+<h2 class="text-center">Detalhes da compra</h2>
+<ul>
+    <li *ngFor="let pedido of pedidos.gameOrdens">
+       {{ pedido.game.name }} - {{ pedido.game.price | currency: 'BRL': true }} x {{ pedido.quantidade}}
+    </li>
+</ul>
+<h3 class="text-right">Total: {{ total | currency: 'BRL': true }}</h3>
+
+<button class="btn btn-primary" (click)="pagamento()" *ngIf="!pago">Efetuar o pagamento</button>
+<button class="btn btn-secondary "><a href="/products">Voltar</a></button>
+
+<div role="alert" *ngIf="pago">
+    Pagamento efetuado com sucesso!
+</div>

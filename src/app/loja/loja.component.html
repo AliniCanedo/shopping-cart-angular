@@ -1,7 +1,16 @@
-<!-- <h1>Games</h1>
+<h1>Games</h1>
 <select>
-  <option>Mais Populares</option>
-</select> -->
-<app-games></app-games>
-
-<app-carrinho-de-compras></app-carrinho-de-compras>
+  <option value="">Mais populares</option>
+</select>
+<div class="row">
+  <div class="col-md-9">
+      <app-games #productsC [hidden]="fimDoPedido"></app-games>
+  </div>
+  <div class="col-md-3">
+      <app-carrinho-de-compras (onFimDoPedido)=fecharPedido($event) #shoppingCartC
+        [hidden]="fimDoPedido"></app-carrinho-de-compras>
+  </div>
+  <div class="col-md-6 offset-3">
+      <app-ordem #ordersC [hidden]="!fimDoPedido"></app-ordem>
+  </div>
+</div>
