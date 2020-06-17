@@ -18,12 +18,18 @@ rodar ng serve (para rodar o projeto angular)
 
 # Passo 4
 
+carrinho vazio
+
 
 ![image](https://user-images.githubusercontent.com/39836645/84935219-c5598d80-b0ae-11ea-8557-c49d4a10bdb2.png)
 
 
 
+#passo 5
 
+Com produtos no carrinho
+
+![image](https://user-images.githubusercontent.com/39836645/84935518-31d48c80-b0af-11ea-882a-933ca6a1c8f9.png)
 
 
 # ConsultaRemedio
