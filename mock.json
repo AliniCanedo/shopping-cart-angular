@@ -62,6 +62,59 @@
       "price": 115.8,
       "score": 290,
       "image": "./assets/horizon-zero-dawn.png"
+    },
+    {
+      "gameOrdens": [
+        {
+          "game": {
+            "id": 102,
+            "name": "The Witcher III Wild Hunt",
+            "price": 119.5,
+            "score": 250,
+            "image": "./assets/the-witcher-iii-wild-hunt.png"
+          }
+        },
+        {
+          "game": {
+            "id": 102,
+            "name": "The Witcher III Wild Hunt",
+            "price": 119.5,
+            "score": 250,
+            "image": "./assets/the-witcher-iii-wild-hunt.png"
+          },
+          "quantidade": 0
+        },
+        {
+          "game": {
+            "id": 102,
+            "name": "The Witcher III Wild Hunt",
+            "price": 119.5,
+            "score": 250,
+            "image": "./assets/the-witcher-iii-wild-hunt.png"
+          },
+          "quantidade": 0
+        },
+        {
+          "game": {
+            "id": 102,
+            "name": "The Witcher III Wild Hunt",
+            "price": 119.5,
+            "score": 250,
+            "image": "./assets/the-witcher-iii-wild-hunt.png"
+          },
+          "quantidade": 0
+        },
+        {
+          "game": {
+            "id": 102,
+            "name": "The Witcher III Wild Hunt",
+            "price": 119.5,
+            "score": 250,
+            "image": "./assets/the-witcher-iii-wild-hunt.png"
+          },
+          "quantidade": 0
+        }
+      ]
     }
   ]
 }

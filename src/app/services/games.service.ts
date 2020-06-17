@@ -1,106 +1,81 @@
-import { Game } from './../shared/modelos/games';
-import { GameOrdens } from './../shared/modelos/game-ordens';
-import { GameOrdem } from './../shared/modelos/game-ordem';
-import { GamesPedidos } from './../loja/ordem/ordens.model';
-import { Games } from './../loja/games/games.model';
+import { GamesPedidos } from './../shared/modelos/ordens.model';
+import { Pedido } from './../shared/modelos/ordem.model';
+import { Game } from '../shared/modelos/games';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { Pedido } from '../loja/ordem/ordem.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class GameService {
+  api = 'http://localhost:3000/products';
 
-    api  = 'http://localhost:3000/products';
+  private productOrder: Pedido;
+  private orders: GamesPedidos = new GamesPedidos();
 
-    private gameOrdem: GameOrdem;
-    private pedidos: GameOrdens = new GameOrdens();
+  private productOrderSubject = new Subject();
+  private ordersSubject = new Subject();
+  private totalSubject = new Subject();
+  private subTotalSubject = new Subject();
+  private sumFreteSubject = new Subject();
 
+  private total: number;
+  private subtotal: number;
+  private sumFrete: number;
 
+  ProductOrderChanged = this.productOrderSubject.asObservable();
+  OrdersChanged = this.ordersSubject.asObservable();
+  TotalChanged = this.totalSubject.asObservable();
 
-    private gameOrdemSubject = new Subject();
-    private pedidosSubject = new Subject();
-    private totalSubject = new Subject();
+  constructor(private http: HttpClient) {}
 
-    private total: number;
-    private subTotalSubject = new Subject();
-    private sumFreteSubject = new Subject();
-    private semFreteSubject = new Subject();
+  // lista todos os games
 
+  listarProdutos(): Observable<Game[]> {
+    return this.http.get<Game[]>(this.api);
+  }
 
-    private subtotal: number;
-    private sumFrete: number;
-    private semFrete: number;
+  set SelectedProductOrder(value: Pedido) {
+    this.productOrder = value;
+    this.productOrderSubject.next();
+  }
 
-    PedidoGameAlterado = this.gameOrdemSubject.asObservable();
-    PedidoAlterado = this.pedidosSubject.asObservable();
-    TotalAlterado = this.totalSubject.asObservable();
+  get SelectedProductOrder() {
+    return this.productOrder;
+  }
 
-    constructor(private http: HttpClient) {
-    }
+  set ProductOrders(value: GamesPedidos) {
+    this.orders = value;
+    this.ordersSubject.next();
+  }
 
-    listarTodosGames(): Observable<Game[]> {
-        return this.http.get<Game[]>(this.api);
-    }
+  get ProductOrders() {
+    return this.orders;
+  }
 
-    salvarPedido(pedido: GameOrdens) {
-        return this.http.post(this.api, pedido);
-    }
-
-
-    set pedidoGameSelecionado(value: GameOrdem) {
-        this.gameOrdem = value;
-        this.gameOrdemSubject.next();
-    }
-
-    get pedidoGameSelecionado() {
-        return this.gameOrdem;
-    }
-
-    set GamesPedidos(value: GameOrdens) {
-        this.pedidos = value;
-        this.pedidosSubject.next();
-    }
-
-    get GamesPedidos() {
-        return this.pedidos;
-    }
-
-    get Total() {
-      return this.total;
+  get Total() {
+    return this.total;
   }
 
   set Total(value: number) {
-      this.total = value;
-      this.totalSubject.next();
+    this.total = value;
+    this.totalSubject.next();
   }
   get SubTotal() {
-      return this.subtotal;
+    return this.subtotal;
   }
 
   set SubTotal(value: number) {
-      this.subtotal = value;
-      this.subTotalSubject.next();
+    this.subtotal = value;
+    this.subTotalSubject.next();
   }
   get SumFrete() {
-      return this.sumFrete;
+    return this.sumFrete;
   }
 
   set SumFrete(value: number) {
-      this.sumFrete = value;
-      this.sumFreteSubject.next();
+    this.sumFrete = value;
+    this.sumFreteSubject.next();
   }
-
-  get SemFrete() {
-      return this.semFrete;
-  }
-
-  set SemFrete(value: number) {
-      this.semFrete = value;
-      this.semFreteSubject.next();
-  }
-
 }

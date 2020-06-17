@@ -1,17 +1,20 @@
-import { OrdemComponent } from './ordem/ordem.component';
+import { Pedido } from './../shared/modelos/ordem.model';
+import { Game } from './../shared/modelos/games';
+import { GameService } from './../services/games.service';
 import { CarrinhoDeComprasComponent } from './carrinho-de-compras/carrinho-de-compras.component';
 import { GamesComponent } from './games/games.component';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loja',
   templateUrl: './loja.component.html',
-  styleUrls: ['./loja.component.css']
+  styleUrls: ['./loja.component.css'],
 })
-export class LojaComponent  {
+export class LojaComponent implements OnInit {
+  products: Game[];
+  productOrders: Pedido;
 
-  private collapsed = true;
-  fimDoPedido = false;
+  constructor(private service: GameService) {}
 
   @ViewChild('productsC')
   productsC: GamesComponent;
@@ -19,18 +22,14 @@ export class LojaComponent  {
   @ViewChild('shoppingCartC')
   shoppingCartC: CarrinhoDeComprasComponent;
 
-  @ViewChild('ordersC')
-  ordersC: OrdemComponent;
-
-
-  fecharPedido(fimDoPedido: boolean) {
-      this.fimDoPedido = fimDoPedido;
+  ngOnInit() {
+    this.service.listarProdutos().subscribe((game) => (this.products = game));
   }
 
   redefinir() {
-      this.fimDoPedido = false;
-      this.productsC.redefinir();
-      this.shoppingCartC.redefinir();
-      this.ordersC.pago = false;
+    this.productsC.redefinir();
+    this.shoppingCartC.redefinir();
   }
+
+
 }

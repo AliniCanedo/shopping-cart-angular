@@ -1,182 +1,168 @@
-import { Pedido } from './../ordem/ordem.model';
+import { GamesPedidos } from '../../shared/modelos/ordens.model';
+import { Pedido } from '../../shared/modelos/ordem.model';
 import { Game } from './../../shared/modelos/games';
-import { GameOrdem } from './../../shared/modelos/game-ordem';
-import { GameOrdens } from './../../shared/modelos/game-ordens';
-
-
-import { GameService } from './../../services/games.service';
+import { GameService } from '../../services/games.service';
 import { Subscription } from 'rxjs';
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-carrinho-de-compras',
   templateUrl: './carrinho-de-compras.component.html',
-  styleUrls: ['./carrinho-de-compras.component.css']
+  styleUrls: ['./carrinho-de-compras.component.css'],
 })
 export class CarrinhoDeComprasComponent implements OnInit, OnDestroy {
-     fimDoPedido: boolean;
-     pedidos: GameOrdens;
-     private carrinhoDeComprasPedido: GameOrdens;
-    total: number;
-    sub: Subscription;
+  orders: GamesPedidos;
+  total: number;
+  subTotal: number;
+  sumFrete: number;
+  frete: number;
+  sum: number;
+  sub: Subscription;
+  productOrders: Pedido[] = [];
+  products: Game[] = [];
+  selectedProductOrder: Pedido;
+  shoppingCartOrders: GamesPedidos;
+  productSelected = true;
+  // tslint:disable-next-line: variable-name
+  remove_item = false;
 
-    subTotal: number;
-    sumFrete: number;
-    frete: number;
-    sum: number;
-    gamePedido: GameOrdem[] = [];
-
-
-    // tslint:disable-next-line: no-output-on-prefix
-    @Output() onFimDoPedido: EventEmitter<boolean>;
-  games: any[];
-
-    constructor(private service: GameService) {
-        this.sumFrete = 0;
-        this.total = 0;
-        this.sum = 0;
-        this.frete = 10;
-        this.total = 0;
-        this.fimDoPedido = false;
-        this.onFimDoPedido = new EventEmitter<boolean>();
-    }
-
-    ngOnInit() {
-        this.pedidos = new GameOrdens();
-        this.gamePedido = [];
-        this.carregarCarrinho();
-        this.carregarTotal();
-        this.loadSubTotal();
-        this.loadProducts();
-        this.loadOrders();
-        this.loadSumFrete();
-    }
-
-
-    removerCarrinho(gamePedido: GameOrdem) {
-        const index = this.getGameIndex(gamePedido.game);
-        if (index > -1) {
-
-            this.carrinhoDeComprasPedido.gameOrdens.splice(
-                this.getGameIndex(gamePedido.game), 1);
-        }
-        this.service.GamesPedidos = this.carrinhoDeComprasPedido;
-        this.carrinhoDeComprasPedido = this.service.GamesPedidos;
-
-    }
-
-    getGameIndex(game: Game): number {
-        return this.service.GamesPedidos.gameOrdens.findIndex(
-            value => value.game === game);
-    }
-
-    isGameSelecionado(game: Game): boolean {
-        return this.getGameIndex(game) > -1;
-    }
-
-
-    private calcularTotal(games: GameOrdem[]): number {
-        let sum = 0;
-        games.forEach(value => {
-            sum += (value.game.price * value.quantidade);
-        });
-        return sum;
-    }
-
-    private calculateFrete(pedidos: Pedido[]): number  {
-      let sumFrete = 0;
-      pedidos.forEach(value => {
-          if (this.sum < 250) {
-              this.frete = 10;
-              sumFrete += (this.frete * value.quantidade);
-
-      }
-          if (this.sum > 250) {
-          this.frete = 0;
-          sumFrete += (this.frete * value.quantidade);
-
-      }
-      });
-
-      return sumFrete;
-
+  constructor(private service: GameService) {
+    this.remove_item = false;
+    this.sumFrete = 0;
+    this.total = 0;
+    this.sum = 0;
+    this.frete = 0;
   }
 
-    ngOnDestroy() {
-        this.sub.unsubscribe();
-    }
+  ngOnInit() {
+    this.orders = new GamesPedidos();
+    this.productOrders = [];
+    this.carregarGames();
+    this.carregarCarrinho();
+    this.carregarPedidos();
+    this.carregaTotal();
+    this.carregaSubTotal();
+    this.carregaSomaFrete();
+  }
 
-    fecharPedido() {
-        this.fimDoPedido = true;
-        this.service.Total = this.total;
-        this.onFimDoPedido.emit(this.fimDoPedido);
-    }
-
-    carregarTotal() {
-        this.sub = this.service.PedidoAlterado.subscribe(() => {
-            this.total = this.calcularTotal(this.pedidos.gameOrdens);
+  // Lista os games vindos do serviço
+  carregarGames() {
+    this.service.listarProdutos().subscribe(
+      (products: any[]) => {
+        this.products = products;
+        this.products.forEach((product) => {
+          this.productOrders.push(new Pedido(product, 0));
         });
-    }
+      },
+      (error) => console.log(error)
+    );
+  }
 
-    carregarCarrinho() {
-        this.sub = this.service.PedidoGameAlterado.subscribe(() => {
-            const gamePedido = this.service.pedidoGameSelecionado;
-            if (gamePedido) {
-                this.pedidos.gameOrdens.push(new GameOrdem(
-                  gamePedido.game, gamePedido.quantidade));
-            }
-            this.service.GamesPedidos = this.pedidos;
-            this.pedidos = this.service.GamesPedidos;
-            this.total = this.calcularTotal(this.pedidos.gameOrdens);
-        });
-    }
-
-    redefinir() {
-        this.fimDoPedido = false;
-        this.pedidos = new GameOrdens();
-        this.pedidos.gameOrdens = [];
-        this.carregarTotal();
-        this.total = 0;
-    }
-
-    loadSubTotal() {
-      this.sub = this.service.PedidoAlterado.subscribe(() => {
-        this.total = this.calculateSubTotal(this.games);
+  // adiciona os games ao carrinho
+  carregarCarrinho() {
+    this.sub = this.service.ProductOrderChanged.subscribe(() => {
+      const productOrder = this.service.SelectedProductOrder;
+      if (productOrder) {
+        this.orders.gamesPedido.push(
+          new Pedido(productOrder.game, productOrder.quantidade)
+        );
+      }
+      this.service.ProductOrders = this.orders;
+      this.orders = this.service.ProductOrders;
+      this.total = this.calculaTotal(this.orders.gamesPedido);
+      this.subTotal = this.calculaSubTotal(this.orders.gamesPedido);
+      this.sumFrete = this.calculaFrete(this.orders.gamesPedido);
     });
   }
 
-  private calculateSubTotal(games: Pedido[]): number {
+  redefinir() {
+    this.orders = new GamesPedidos();
+    this.orders.gamesPedido = [];
+    this.carregaTotal();
+    this.total = 0;
+  }
+
+  // remove itens do carrinho
+  removerCarrinho(productOrder: Pedido) {
+    const index = this.getGameIndex(productOrder.game);
+    if (index > -1) {
+      this.shoppingCartOrders.gamesPedido.splice(
+        this.getGameIndex(productOrder.game),
+        1
+      );
+    }
+    this.service.ProductOrders = this.shoppingCartOrders;
+    this.shoppingCartOrders = this.service.ProductOrders;
+    this.productSelected = false;
+  }
+
+  carregarPedidos() {
+    this.sub = this.service.OrdersChanged.subscribe(() => {
+      this.shoppingCartOrders = this.service.ProductOrders;
+    });
+  }
+
+  private calculaTotal(products: Pedido[]): number {
     let sum = 0;
-    games.forEach(value => {
-        sum += (value.game.price * value.quantidade);
+    products.forEach((value) => {
+      sum += value.game.price * value.quantidade;
     });
     return sum;
-}
-loadProducts() {
-    this.service.listarTodosGames()
-        .subscribe(
-            (games: any[]) => {
-                this.games = games;
-                // tslint:disable-next-line: no-shadowed-variable
-                this.games.forEach((games: Game) => {
-                    this.gamePedido.push(new Pedido(games, 0));
-                });
-            },
-            (error) => console.log(error)
-        );
-}
+  }
+  private calculaSubTotal(products: Pedido[]): number {
+    let sum = 0;
+    products.forEach((value) => {
+      sum += value.game.price * value.quantidade;
+    });
+    return sum;
+  }
+  private calculaFrete(products: Pedido[]): number {
+    let sumFrete = 0;
+    products.forEach((value) => {
+      if (sumFrete <= 250) {
+        this.frete = 10;
+        sumFrete += this.frete * value.quantidade;
+      } else {
+        sumFrete += this.frete * value.quantidade;
+      }
+    });
+    return sumFrete;
+  }
 
-loadOrders() {
-  this.sub = this.service.PedidoAlterado.subscribe(() => {
-      this.carrinhoDeComprasPedido = this.service.GamesPedidos;
-  });
-}
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
- loadSumFrete() {
-  this.sub = this.service.PedidoAlterado.subscribe(() => {
-      return this.sumFrete = this.calculateFrete(this.games);
-  });
-}
+  carregaTotal() {
+    this.sub = this.service.OrdersChanged.subscribe(() => {
+      this.total = this.calculaTotal(this.orders.gamesPedido);
+    });
+  }
+  carregaSubTotal() {
+    this.sub = this.service.OrdersChanged.subscribe(() => {
+      this.total = this.calculaSubTotal(this.orders.gamesPedido);
+    });
+  }
 
+  carregaSomaFrete() {
+    this.sub = this.service.OrdersChanged.subscribe(() => {
+      this.sumFrete = this.calculaFrete(this.orders.gamesPedido);
+    });
+  }
 
+  getGameIndex(product: Game): number {
+    return this.service.ProductOrders.gamesPedido.findIndex(
+      (value) => value.game === product
+    );
+  }
+
+  isGameSelected(product: Game): boolean {
+    return this.getGameIndex(product) > -1;
+  }
 }

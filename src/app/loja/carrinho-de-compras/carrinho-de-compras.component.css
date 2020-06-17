@@ -5,27 +5,26 @@
   border: 1.3px solid #e1e1e1;
 }
 .card-header h5 {
-color: black;
-float: left;
-font-weight: 700;
-margin-right: 5px;
+  color: black;
+  float: left;
+  font-weight: 700;
+  margin-right: 5px;
 }
 .card-header h6 {
   color: black;
   float: right;
   font-weight: 700;
   margin-right: 5px;
-  }
-.card-header{
+}
+.card-header {
   padding: 20px 20px 0px 20px;
   border-bottom: transparent;
 }
-.card-header, .card-body {
+.card-header,
+.card-body {
   background-color: #ffffff;
 }
-.card-body h6 {
-color: black;
-}
+
 .card-body2 {
   display: inline-block;
   text-align: center;
@@ -36,24 +35,24 @@ color: black;
   margin-bottom: 20px;
 }
 ul {
-padding: 0;
-display: flex;
-display: block;
+  padding: 0;
+  display: flex;
+  display: block;
 }
 
 ul li {
-list-style: none;
-width: 100%;
-margin-bottom: 20px;
+  list-style: none;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 ul li img {
-width: 70px;
-float: left;
-background-color: #eeeeee;
-margin-right: 10px;
-padding: 10px 10px;
-border-radius: 5px;
+  width: 70px;
+  float: left;
+  background-color: #eeeeee;
+  margin-right: 10px;
+  padding: 10px 10px;
+  border-radius: 5px;
 }
 
 ul li h6 {
@@ -70,13 +69,17 @@ ul li h6 {
   text-align: center;
 }
 .card-content {
-display: grid;
-grid-template-columns: auto auto;
-width: 100%;
-height: auto;
-color: #847a7a !Important;
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 100%;
+  height: auto;
+  color: #847a7a !important;
 }
 .order-content {
-display: grid;
-grid-template-columns: auto auto auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.btn-block {
+  margin-top: 60px;
 }
