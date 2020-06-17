@@ -1,3 +1,31 @@
+# Primeiros passos
+
+git clone git@github.com:AliniCanedo/consulta-remedio.git
+
+npm install (para baixar as dependencias do projeto)
+
+# Passo 2
+
+npm i json-server (para instalar nossa api)
+
+
+logo após rodar  json-server --watch mock.json  
+
+
+# Passo 3
+
+rodar ng serve (para rodar o projeto angular)
+
+# Passo 4
+
+
+
+
+
+
+
+
+
 # ConsultaRemedio
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
