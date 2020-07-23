@@ -1,16 +1,21 @@
 <div class="container">
-  <h1 id="games">Games</h1>
-  <select class="custom-select">
-    <option selected>Mais populares</option>
-    <option *ngFor="let pedido of products" value="{{pedido.score}}">{{pedido.name}}</option>
-  </select>
-</div>
-
-<div class="row">
-  <div class="col-md-9">
-    <app-games #productsC></app-games>
+  <div class="row">
+    <div class="col-6">
+      <h1>Games</h1>
+    </div>
+    <div class="col-6">
+      <select class="custom-select">
+        <option selected>Mais populares</option>
+        <option *ngFor="let pedido of products" value="{{pedido.score}}">{{pedido.name}}</option>
+      </select>
+    </div>
   </div>
-  <div id="carrinho" class="col-md-3">
-    <app-carrinho-de-compras #shoppingCartC></app-carrinho-de-compras>
+  <div class="row">
+    <div class="col-md-9">
+      <app-games #productsC></app-games>
+    </div>
+    <div id="carrinho" class="col-md-3">
+      <app-carrinho-de-compras #shoppingCartC></app-carrinho-de-compras>
+    </div>
   </div>
 </div>
