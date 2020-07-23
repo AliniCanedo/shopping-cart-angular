@@ -1,15 +1,13 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h5>Carrinho </h5>
-    </div>
-  </div>
-</div>
 
   <!--Mostrado quando carrinho está vazio-->
   <div class="container">
     <div class="row">
-      <div class="col-md-6 text-center" [hidden]="orders.gamesPedido.length !== 0">
+      <div class="col-4">
+        <h5>Carrinho </h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 text-center my-5" [hidden]="orders.gamesPedido.length !== 0">
         <img src="../assets/cart-icon.svg">
         <h6>Até o momento,<br> o seu carrinho está vazio</h6>
       </div>
