@@ -1,9 +1,10 @@
-import { Game } from "./games";
+import { Game } from './games';
 
 export class Pedido {
   game: Game;
   quantidade: number;
   price: number;
+  mostrar: boolean;
 
   constructor(game: Game, quantidade: number) {
     this.game = game;
