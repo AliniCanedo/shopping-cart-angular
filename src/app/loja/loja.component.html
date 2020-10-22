@@ -1,24 +1,22 @@
 <div class="container">
-  <div class="row py-5">
-    <div class="col-4">
+  <div class="row my-5 cabecalho">
+    <div class="col-lg-6">
       <h1>Games</h1>
     </div>
-    <div class="col-4">
+    <div class="col-lg-6">
       <select class="custom-select">
         <option selected>Mais populares</option>
         <option *ngFor="let pedido of products" value="{{pedido.score}}">{{pedido.name}}</option>
       </select>
     </div>
-    <div class="col-4">
+  </div>
 
-  </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-lg-9 col-md-6 col-sm-6">
-    <app-games #productsC></app-games>
-  </div>
-  <div class="col-lg-3 col-md-6 col-sm-6"  id="carrinho-position">
-    <app-carrinho-de-compras #shoppingCartC></app-carrinho-de-compras>
+  <div class="row">
+    <div class="col-lg-9 ">
+      <app-games #productsC></app-games>
+    </div>
+    <div class="col-lg-3 d.none d-lg-block" id="carrinho-position">
+      <app-carrinho-de-compras #shoppingCartC></app-carrinho-de-compras>
+    </div>
   </div>
 </div>
