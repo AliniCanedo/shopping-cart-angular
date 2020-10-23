@@ -1,50 +1,33 @@
 .card {
   float: left;
   margin: 20px;
-
 }
-
 .card {
   border: none;
 }
-.card-header{
+.card-header {
   border-bottom: none;
   background-color: #eeeeee;
   padding: 30px 10px;
 }
-.card-body3 {
-  width: 200px;
-}
 .card-img-top {
   width: 75%;
 }
-#produto-titulo {
-  color: #766c6c;
-  font-size: 15px;
-  margin-top: 30px;
-}
-
 .card-price {
-color: #3486e6;
-font-weight: 700;
+  color: #3486e6;
+  font-weight: 700;
 }
-.container-add {
-  width: fit-content;
-  margin-top: 30px;
-}
-
 .btn {
   color: #3486e6;
   font-weight: 700;
   margin-left: 25px;
 }
-a:hover {
-  color: #0056b3;
-  text-decoration: none;
-
-}
 a {
   color: #007bff;
   text-decoration: none;
   background-color: transparent;
+}
+a:hover {
+  color: #0056b3;
+  text-decoration: none;
 }
