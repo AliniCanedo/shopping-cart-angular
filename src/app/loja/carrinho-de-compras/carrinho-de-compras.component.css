@@ -1,3 +1,6 @@
 .btn {
   border-radius: 50%;
 }
+.carrinho-vazio {
+  border: 1px solid #ccc;
+}
