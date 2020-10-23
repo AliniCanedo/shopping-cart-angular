@@ -1,55 +1,46 @@
-
-  <!--Mostrado quando carrinho está vazio-->
-  <div class="container">
-    <div class="row">
-      <div class="col-4">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 d.none d.lg-block">
+      <div [hidden]="orders.gamesPedido.length !== 0">
         <h5>Carrinho </h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 text-center my-5" [hidden]="orders.gamesPedido.length !== 0">
         <img src="../assets/cart-icon.svg">
         <h6>Até o momento,<br> o seu carrinho está vazio</h6>
       </div>
-
-      <!--Caso contrario lista games selecionados-->
-      <div class="card-body" [hidden]="orders.gamesPedido.length == 0">
-        <ul>
-          <li>
-            <div class="order-content" *ngFor="let pedido of orders.gamesPedido" (mouseenter)="remove_item = true"
-              (mouseleave)="remove_item = false">
-              <img src={{pedido.game.image}}>
-              <div>
-                <h6>{{ pedido.game.name }}</h6>
-                <br>
-                <h6 style="color:black"><strong>{{ pedido.game.price | currency: 'BRL': true}} </strong></h6>
-              </div>
-              <div *ngIf="remove_item">
-                <button type="button" class="btn-custom btn-primary" (click)="removerCarrinho(pedido)">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </div>
-
-          </li>
-        </ul>
-        <div class="card-content">
-          <h6>Subtotal</h6>
-          <h6 style="color: black; text-align: right;"> {{ subTotal | currency: 'BRL': true}}</h6>
-        </div>
-        <div class="card-content">
-          <h6>Frete</h6>
-          <h6 style="color: black; text-align: right;">{{ sumFrete | currency: 'BRL': true}}</h6>
-        </div>
-        <div class="card-content">
-          <h6>Total</h6>
-          <h4 style="color: black; text-align: right;"> {{ total | currency: 'BRL': true}}</h4>
-        </div>
-        <div>
-          <!--Botão desabilitado para seguir o mockup-->
-          <button class="btn btn-primary btn-block" [disabled]="orders.gamesPedido.length">Finalizar compra
-          </button>
-        </div>
-      </div>
     </div>
   </div>
+  <div class="row" *ngFor="let pedido of orders.gamesPedido" (mouseenter)="remove_item = true"
+    (mouseleave)="remove_item = false" >
+    <div class="col-lg-12">
+      <img src={{pedido.game.image}}>
+      <h6>{{ pedido.game.name }}</h6>
+    </div>
+    <div class="col-lg-12">
+      <h6 style="color:black"><strong> {{pedido.quantidade}} x {{ pedido.game.price | currency: 'BRL': true}} </strong>
+      </h6>
+      <button type="button" class="btn btn-primary" (click)="removerCarrinho(pedido)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h6> Subtotal: {{ subTotal | currency: 'BRL': true}}</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h6>Frete: {{ sumFrete | currency: 'BRL': true}}</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h4>Total: {{ total | currency: 'BRL': true}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <button class="btn-primary btn-block" [disabled]="!orders.gamesPedido.length">Finalizar compra
+      </button>
+    </div>
+  </div>
+</div>
